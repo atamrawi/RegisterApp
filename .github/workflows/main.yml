@@ -15,6 +15,10 @@ jobs:
     # Specifies the type of virtual machine (runner) to use (latest Ubuntu version)
     runs-on: ubuntu-latest
 
+    # Set environment variables to explicitly use Node.js 24 and suppress the deprecation warning
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     # "steps" is a list of individual tasks that run sequentially within the job
     steps:
       # Step 1: Checks out the code so the runner can access it
