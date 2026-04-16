@@ -12,7 +12,7 @@ jobs:
       pull-requests: write
     steps:
       - name: AI Code Review
-        uses: AleksandrFurmenkovOfficial/ai-code-review@v0.12
+        uses: AleksandrFurmenkovOfficial/ai-code-review@v0.9
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           owner: ${{ github.repository_owner }}
