@@ -10,9 +10,6 @@ COPY package*.json ./
 # Install app dependencies
 RUN npm install
 
-
-RUN invalid_command_that_will_fail
-
 # Bundle app source
 COPY . .
 
