@@ -4,7 +4,7 @@
   "description": "A simple project to learn mongobd use with node-js.",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "nodemon main.js"
   },
   "keywords": [
