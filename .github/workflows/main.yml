@@ -1,30 +1,39 @@
-# The name of the workflow as it will appear in the "Actions" tab on GitHub
 name: RegisterApp CI Pipeline
-
-# The "on" keyword defines the events that trigger the workflow
 on:
-  # Specifies that this workflow runs on a "push" event
-  push:
-    # Limits the execution to pushes made specifically to the "main" branch
-    branches: [ "main" ]
-
-# The "jobs" section groups all the tasks to be executed
+  pull_request:
+    types: [ opened, synchronize ]
 jobs:
-  # Defines a specific job named "build"
-  build:
-    # Specifies the type of virtual machine (runner) to use (latest Ubuntu version)
+  test:
     runs-on: ubuntu-latest
-
-    # Set environment variables to explicitly use Node.js 24 and suppress the deprecation warning
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-    # "steps" is a list of individual tasks that run sequentially within the job
     steps:
-      # Step 1: Checks out the code so the runner can access it
-      - name: Checkout repository  # Display name for the UI
-        uses: actions/checkout@v4  # Uses the official pre-built action to clone your repo
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Run Tests
+        run: npm test
 
-      # Step 2: A simple test step to verify the pipeline works
-      - name: Simple Log Message          # Display name for the UI
-        run: echo "CI Pipeline Triggered Successfully!" # Runs a shell command to print text to the logs
+  ai-code-review:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: AI Code Review
+        uses: AleksandrFurmenkovOfficial/ai-code-review@v1.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          pr_number: ${{ github.event.number }}
+          ai_provider: 'google'
+          google_api_key: ${{ secrets.GOOGLE_API_KEY }}
+          #google_model: 'gemini-1.5-flash'        
