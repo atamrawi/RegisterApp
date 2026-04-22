@@ -27,7 +27,7 @@ jobs:
               "user": "github-actions-bot"
             }')
 
-          curl -X POST 'https://api.dify.ai/v1' \
+          curl -X POST 'https://api.dify.ai/v1/workflows/run' \
             -H "Authorization: Bearer $DIFY_API_KEY" \
             -H 'Content-Type: application/json' \
             -d "$JSON_PAYLOAD"
