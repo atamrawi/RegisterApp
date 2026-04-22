@@ -91,7 +91,7 @@ describe('POST /add - Add User Handler', () => {
         expect(User).toHaveBeenCalledWith({
             name: 'John Doe',
             email: 'john.doe@example.com',
-            phone: '1234567890',
+            phone: '123456789',
             image: 'mock_image_123.png'
         });
 
